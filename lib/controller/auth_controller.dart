@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 class AuthController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  RxBool isObsecurePass = true.obs;
 
   late final TextEditingController nameCtrl;
   late final TextEditingController emailCtrl;
@@ -16,11 +17,19 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    nameCtrl.dispose();
-    emailCtrl.dispose();
-    passCtrl.dispose();
-    super.onClose();
+//<================== For Change Password Visibility
+  changePasswordVisibility() {
+    isObsecurePass.value = false;
+    Future.delayed(
+      const Duration(seconds: 2),
+    ).then((value) => {isObsecurePass.value = true});
   }
+
+  // @override
+  // void onClose() {
+  //   nameCtrl.dispose();
+  //   emailCtrl.dispose();
+  //   passCtrl.dispose();
+  //   super.onClose();
+  // }
 }
