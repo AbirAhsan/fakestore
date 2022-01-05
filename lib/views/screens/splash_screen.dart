@@ -8,8 +8,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SplashScreenController splashScreenCtrl =
-        Get.put(SplashScreenController());
+    Get.put(SplashScreenController());
     return const Scaffold(
       body: Center(
         child: Text(
