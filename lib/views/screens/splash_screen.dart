@@ -1,3 +1,4 @@
+import 'package:fakestore/views/variable/variables.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class SplashScreen extends StatelessWidget {
     return const Scaffold(
       body: Center(
         child: Text(
-          "Please, Wait ...",
+          appName,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 32,
