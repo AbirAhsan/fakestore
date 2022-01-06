@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 import 'package:fakestore/controller/auth_controller.dart';
 import 'package:fakestore/views/screens/auth_screen/registration_screen.dart';
+import 'package:fakestore/views/screens/home_screen.dart';
 import 'package:fakestore/views/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -77,6 +78,9 @@ class LoginScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () async {
+                    //TODO For Test Perpose now
+                    Get.offAll(const HomeScreen());
+
                     // if (validateAndSave(_formKey)) {
                     //   await CustomEassyLoading().startLoading();
                     //   await _signin();
