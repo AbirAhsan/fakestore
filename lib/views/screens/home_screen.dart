@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
     final ProductController productCtrl = Get.put(ProductController());
     return Obx(() => DefaultTabController(
         length: productCtrl.categoryList.length,
+        initialIndex: productCtrl.tabIndex.value,
         child: Scaffold(
           appBar: AppBar(
             title: const Text(appName),
@@ -21,6 +22,7 @@ class HomeScreen extends StatelessWidget {
                 child: productCtrl.categoryList.isNotEmpty
                     ? TabBar(
                         isScrollable: true,
+                        onTap: (index) => productCtrl.changeIndex(index),
                         tabs: productCtrl.categoryList
                             .map((element) => Tab(
                                   text: element,
@@ -40,7 +42,12 @@ class HomeScreen extends StatelessWidget {
             child: TabBarView(
               children: productCtrl.categoryList
                   .map((element) => Center(
-                        child: Text(element),
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: productCtrl.product.length,
+                            itemBuilder: (buildContext, index) {
+                              return Text(productCtrl.product[index]!.title);
+                            }),
                       ))
                   .toList(),
             ),
