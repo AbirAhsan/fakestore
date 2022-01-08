@@ -23,7 +23,7 @@ class ProductApiService {
 
 //<================== Get Specific Category Products
   Future<List<ProductModel?>> specificCategoryProducts(String category) async {
-    Uri url = Uri.parse("$baseUrl/products/category/jewelery");
+    Uri url = Uri.parse("$baseUrl/products/category/$category");
     // print(url);
     // String _token = await SaveDataToLocal().loadToken();
     // String authorization = "Bearer $_token";
@@ -34,6 +34,7 @@ class ProductApiService {
     if (response.statusCode == 200) {
       var jsonResponse = response.body;
       var decoded = json.decode(jsonResponse);
+      print(decoded);
       List<ProductModel?> mapdatalist =
           decoded.map<ProductModel?>((b) => ProductModel.fromJson(b)).toList();
       print("Map List $mapdatalist");

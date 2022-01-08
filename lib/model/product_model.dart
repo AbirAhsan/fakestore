@@ -6,6 +6,7 @@ class ProductModel {
     required this.category,
     required this.description,
     required this.image,
+    this.ratingModel,
   });
   late final int id;
   late final String title;
@@ -13,14 +14,17 @@ class ProductModel {
   late final String category;
   late final String description;
   late final String image;
+  late final RatingModel? ratingModel;
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    title = json['title'];
-    price = json['price'];
-    category = json['category'];
-    description = json['description'];
-    image = json['image'];
+    title = json['title'].toString();
+    price = json['price'].toString();
+    category = json['category'].toString();
+    description = json['description'].toString();
+    image = json['image'].toString();
+    ratingModel =
+        json['rating'] != null ? RatingModel.fromJson(json['rating']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +35,30 @@ class ProductModel {
     _data['category'] = category;
     _data['description'] = description;
     _data['image'] = image;
+    if (ratingModel != null) {
+      _data['rating'] = ratingModel!.toJson();
+    }
+    return _data;
+  }
+}
+
+class RatingModel {
+  RatingModel({
+    required this.rate,
+    required this.count,
+  });
+  late final String rate;
+  late final String count;
+
+  RatingModel.fromJson(Map<String, dynamic> json) {
+    rate = json['rate'].toString();
+    count = json['count'].toString();
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['rate'] = rate;
+    _data['count'] = count;
     return _data;
   }
 }

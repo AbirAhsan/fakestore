@@ -17,13 +17,16 @@ class ProductController extends GetxController {
     ProductApiService().getAllCategories().then((resp) {
       if (resp.isNotEmpty) {
         categoryList.value = resp;
+        fetchProductBySpecificCategory(categoryList[tabIndex.value]);
       }
     });
   }
 
   changeIndex(int index) {
     tabIndex.value = index;
-    fetchProductBySpecificCategory(categoryList[index]);
+
+    fetchProductBySpecificCategory(categoryList[tabIndex.value]);
+
     print(tabIndex);
   }
 
