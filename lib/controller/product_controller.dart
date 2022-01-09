@@ -1,4 +1,5 @@
 import 'package:fakestore/model/product_model.dart';
+import 'package:fakestore/services/custom_eassy_loading.dart';
 import 'package:fakestore/services/network_service/product_service.dart';
 import 'package:get/get.dart';
 
@@ -13,13 +14,20 @@ class ProductController extends GetxController {
     super.onInit();
   }
 
-  fetchCategories() {
-    ProductApiService().getAllCategories().then((resp) {
-      if (resp.isNotEmpty) {
-        categoryList.value = resp;
-        fetchProductBySpecificCategory(categoryList[tabIndex.value]);
-      }
-    });
+  fetchCategories() async {
+    try {
+      await CustomEassyLoading().startLoading();
+      ProductApiService().getAllCategories().then((resp) {
+        if (resp.isNotEmpty) {
+          categoryList.value = resp;
+          fetchProductBySpecificCategory(categoryList[tabIndex.value]);
+        }
+      });
+      CustomEassyLoading().stopLoading();
+    } catch (e) {
+      print(e.toString());
+      CustomEassyLoading().stopLoading();
+    }
   }
 
   changeIndex(int index) {
@@ -30,11 +38,18 @@ class ProductController extends GetxController {
     print(tabIndex);
   }
 
-  fetchProductBySpecificCategory(String category) {
-    ProductApiService().specificCategoryProducts(category).then((resp) {
-      if (resp.isNotEmpty) {
-        product.value = resp;
-      }
-    });
+  fetchProductBySpecificCategory(String category) async {
+    try {
+      await CustomEassyLoading().startLoading();
+      ProductApiService().specificCategoryProducts(category).then((resp) {
+        if (resp.isNotEmpty) {
+          product.value = resp;
+        }
+      });
+      CustomEassyLoading().stopLoading();
+    } catch (e) {
+      print(e.toString());
+      CustomEassyLoading().stopLoading();
+    }
   }
 }
