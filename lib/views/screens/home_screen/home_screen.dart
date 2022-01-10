@@ -1,5 +1,6 @@
 import 'package:fakestore/controller/product_controller.dart';
 import 'package:fakestore/model/product_model.dart';
+import 'package:fakestore/views/screens/product_details/product_details_screen.dart';
 import 'package:fakestore/views/variable/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.width;
+//    double _height = MediaQuery.of(context).size.width;
     final ProductController productCtrl = Get.put(ProductController());
     return Obx(() => DefaultTabController(
         length: productCtrl.categoryList.length,
@@ -54,6 +55,8 @@ class HomeScreen extends StatelessWidget {
                           itemBuilder: (buildContext, index) {
                             ProductModel? product = productCtrl.product[index];
                             return HomeGridViewWidget(
+                              onTap: () => Get.to(ProductDetailsScreen(
+                                  productDetails: product)),
                               title: product!.title,
                               imageUrl: product.image,
                               price: product.price,

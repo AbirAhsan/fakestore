@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class ProductController extends GetxController {
   RxList categoryList = [].obs;
   RxInt tabIndex = 0.obs;
+  List listOfProductList = [];
   RxList<ProductModel?> product = List<ProductModel?>.empty(growable: true).obs;
 
   @override
@@ -20,6 +21,7 @@ class ProductController extends GetxController {
       ProductApiService().getAllCategories().then((resp) {
         if (resp.isNotEmpty) {
           categoryList.value = resp;
+          generatelistOfProductList();
           fetchProductBySpecificCategory(categoryList[tabIndex.value]);
         }
       });
@@ -27,6 +29,16 @@ class ProductController extends GetxController {
     } catch (e) {
       print(e.toString());
       CustomEassyLoading().stopLoading();
+    }
+  }
+
+  generatelistOfProductList() {
+    for (var i = 1; i < categoryList.length; i++) {
+      listOfProductList.clear();
+      listOfProductList.add({
+        {"cat": "${categoryList[i]}"},
+        {"list": product},
+      });
     }
   }
 
@@ -44,6 +56,7 @@ class ProductController extends GetxController {
       ProductApiService().specificCategoryProducts(category).then((resp) {
         if (resp.isNotEmpty) {
           product.value = resp;
+          listOfProductList.where((element) => element["cat"] == category);
         }
       });
       CustomEassyLoading().stopLoading();
