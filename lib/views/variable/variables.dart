@@ -1,1 +1,1 @@
-const String appName = "Fake Store App";
+const String appName = "E-Vally";

@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 class ProductController extends GetxController {
   RxList categoryList = [].obs;
   RxInt tabIndex = 0.obs;
+  // <<================For product Count
+  RxInt productCount = 1.obs;
+
   List listOfProductList = [];
   RxList<ProductModel?> product = List<ProductModel?>.empty(growable: true).obs;
 
@@ -63,6 +66,17 @@ class ProductController extends GetxController {
     } catch (e) {
       print(e.toString());
       CustomEassyLoading().stopLoading();
+    }
+  }
+
+//
+  increaseProductCount() {
+    productCount.value++;
+  }
+
+  decreaseProductCount() {
+    if (productCount.value > 1) {
+      productCount.value--;
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:fakestore/controller/product_controller.dart';
 import 'package:fakestore/model/product_model.dart';
 import 'package:fakestore/views/screens/product_details/product_hero_view.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,9 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
+
+    final ProductController productCtrl = Get.put(ProductController());
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -21,11 +25,11 @@ class ProductDetailsScreen extends StatelessWidget {
             expandedHeight: 300.0,
             automaticallyImplyLeading: false,
             flexibleSpace: Hero(
-              tag: productDetails!.id.toString() + productDetails!.image,
+              tag: productDetails!.id.toString() + productDetails!.image!,
               child: InkWell(
                 onTap: () => Get.to(ProductHeroViewScreen(
                   heroTag:
-                      productDetails!.id.toString() + productDetails!.image,
+                      productDetails!.id.toString() + productDetails!.image!,
                   imageLink: productDetails!.image,
                 )),
                 child: FlexibleSpaceBar(
@@ -40,7 +44,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   background: Image.network(
-                    productDetails!.image,
+                    productDetails!.image!,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -70,13 +74,25 @@ class ProductDetailsScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.remove_circle),
+                              onPressed: () {
+                                productCtrl.decreaseProductCount();
+                              },
+                              icon: const Icon(
+                                Icons.remove_circle,
+                                size: 32,
+                              ),
                             ),
-                            const Text("1"),
+                            Obx(
+                              () => Text("${productCtrl.productCount.value}"),
+                            ),
                             IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.add_circle),
+                              onPressed: () {
+                                productCtrl.increaseProductCount();
+                              },
+                              icon: const Icon(
+                                Icons.add_circle,
+                                size: 32,
+                              ),
                             ),
                           ],
                         ),

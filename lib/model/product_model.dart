@@ -13,7 +13,7 @@ class ProductModel {
   late final String price;
   late final String category;
   late final String description;
-  late final String image;
+  late final String? image;
   late final RatingModel? ratingModel;
 
   ProductModel.fromJson(Map<String, dynamic> json) {
