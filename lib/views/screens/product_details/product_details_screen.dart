@@ -41,7 +41,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   background: Image.network(
                     productDetails!.image,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),

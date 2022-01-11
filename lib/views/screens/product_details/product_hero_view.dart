@@ -17,9 +17,11 @@ class ProductHeroViewScreen extends StatelessWidget {
         child: Center(
             child: Hero(
           tag: "$heroTag",
-          child: Image.network(
-            imageLink!,
-            fit: BoxFit.fill,
+          child: Material(
+            child: Image.network(
+              imageLink!,
+              fit: BoxFit.fill,
+            ),
           ),
         )),
       ),
