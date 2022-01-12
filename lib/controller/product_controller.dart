@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class ProductController extends GetxController {
   RxList categoryList = [].obs;
   RxInt tabIndex = 0.obs;
+
   // <<================For product Count
   RxInt productCount = 1.obs;
 
@@ -15,7 +16,12 @@ class ProductController extends GetxController {
   @override
   onInit() {
     fetchCategories();
+
     super.onInit();
+  }
+
+  setProductCountInitialValue() {
+    productCount.value = 1;
   }
 
   fetchCategories() async {

@@ -15,7 +15,7 @@ class ProductDetailsScreen extends StatelessWidget {
     double _width = MediaQuery.of(context).size.width;
 
     final ProductController productCtrl = Get.put(ProductController());
-
+    productCtrl.setProductCountInitialValue();
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -83,7 +83,13 @@ class ProductDetailsScreen extends StatelessWidget {
                               ),
                             ),
                             Obx(
-                              () => Text("${productCtrl.productCount.value}"),
+                              () => Text(
+                                "${productCtrl.productCount.value}",
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             IconButton(
                               onPressed: () {
@@ -98,11 +104,15 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        child: Text(
-                          "BDT: ${productDetails!.price}/-",
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          child: Obx(
+                        () => Text(
+                          "BDT: ${double.parse(productDetails!.price) * productCtrl.productCount.value}/-",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
+                      )),
                     ],
                   ),
                 ),
