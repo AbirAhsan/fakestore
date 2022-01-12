@@ -36,7 +36,7 @@ class ProductApiService {
       var decoded = json.decode(jsonResponse);
       print(decoded);
       List<ProductModel?> mapdatalist =
-          decoded.map<ProductModel?>((b) => ProductModel.fromJson(b)).toList();
+          decoded.map<ProductModel?>((b) => ProductModel.fromMap(b)).toList();
       print("Map List $mapdatalist");
 
       return mapdatalist;

@@ -1,4 +1,10 @@
 class ProductModel {
+  static const tblproducts = 'products';
+  static const colId = 'id';
+  static const colTitle = 'title';
+  static const colPrice = 'price';
+  static const colCategory = 'category';
+  static const colImage = 'image';
   ProductModel({
     required this.id,
     required this.title,
@@ -16,7 +22,7 @@ class ProductModel {
   late final String? image;
   late final RatingModel? ratingModel;
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
+  ProductModel.fromMap(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'].toString();
     price = json['price'].toString();
@@ -24,10 +30,10 @@ class ProductModel {
     description = json['description'].toString();
     image = json['image'].toString();
     ratingModel =
-        json['rating'] != null ? RatingModel.fromJson(json['rating']) : null;
+        json['rating'] != null ? RatingModel.fromMap(json['rating']) : null;
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
     _data['title'] = title;
@@ -36,7 +42,7 @@ class ProductModel {
     _data['description'] = description;
     _data['image'] = image;
     if (ratingModel != null) {
-      _data['rating'] = ratingModel!.toJson();
+      _data['rating'] = ratingModel!.toMap();
     }
     return _data;
   }
@@ -50,12 +56,12 @@ class RatingModel {
   late final String rate;
   late final String count;
 
-  RatingModel.fromJson(Map<String, dynamic> json) {
+  RatingModel.fromMap(Map<String, dynamic> json) {
     rate = json['rate'].toString();
     count = json['count'].toString();
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final _data = <String, dynamic>{};
     _data['rate'] = rate;
     _data['count'] = count;
