@@ -1,3 +1,4 @@
+import 'package:fakestore/controller/cart_controller.dart';
 import 'package:fakestore/controller/product_controller.dart';
 import 'package:fakestore/model/product_model.dart';
 import 'package:fakestore/views/screens/product_details/product_hero_view.dart';
@@ -15,6 +16,7 @@ class ProductDetailsScreen extends StatelessWidget {
     double _width = MediaQuery.of(context).size.width;
 
     final ProductController productCtrl = Get.put(ProductController());
+    final CartController cartCtrl = Get.put(CartController());
     productCtrl.setProductCountInitialValue();
     return Scaffold(
       body: CustomScrollView(
@@ -163,7 +165,10 @@ class ProductDetailsScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      cartCtrl.addToCart(
+                          productDetails!, productCtrl.productCount.toInt());
+                    },
                     child: const Text(
                       "Add To Cart",
                       style: TextStyle(

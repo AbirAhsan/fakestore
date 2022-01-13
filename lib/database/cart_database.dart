@@ -39,6 +39,7 @@ class CartDatabaseHelper {
   Future<int> insert(CartModel? cartModel) async {
     Database db = await database;
     var res = await db.insert(CartModel.tblcarts, cartModel!.toMap());
+    print(res);
     return res;
   }
 

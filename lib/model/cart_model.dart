@@ -7,19 +7,19 @@ class CartModel {
   static const colCount = 'count';
   static const colImage = 'image';
   CartModel({
-    required this.id,
-    required this.productId,
-    required this.title,
-    required this.price,
-    required this.count,
-    required this.image,
+    this.id,
+    this.productId,
+    this.title,
+    this.price,
+    this.count,
+    this.image,
   });
-  late final int id;
-  late final int productId;
-  late final String title;
-  late final String price;
-  late final int count;
-  late final String? image;
+  late final int? id;
+  late int? productId;
+  late String? title;
+  late String? price;
+  late int? count;
+  late String? image;
 
   CartModel.fromMap(Map<String, dynamic> json) {
     id = json['id'];
