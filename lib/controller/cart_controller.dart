@@ -7,9 +7,13 @@ class CartController extends GetxController {
   final CartModel _cartModel = CartModel();
   late CartDatabaseHelper _dbHelper;
 
+  RxList<CartModel?> cartListFromLocal =
+      List<CartModel?>.empty(growable: true).obs;
+
   @override
   onInit() async {
     _dbHelper = CartDatabaseHelper.instance;
+    await fetchCartList();
     super.onInit();
   }
 
@@ -22,5 +26,15 @@ class CartController extends GetxController {
     _cartModel.image = productModel.image;
 
     _dbHelper.insert(_cartModel);
+  }
+
+  fetchCartList() {
+    try {
+      _dbHelper.fetchCart().then((resp) {
+        cartListFromLocal.value = resp;
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

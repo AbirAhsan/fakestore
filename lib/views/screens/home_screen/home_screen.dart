@@ -1,3 +1,4 @@
+import 'package:fakestore/controller/cart_controller.dart';
 import 'package:fakestore/controller/product_controller.dart';
 import 'package:fakestore/model/product_model.dart';
 import 'package:fakestore/views/screens/product_details/product_details_screen.dart';
@@ -16,12 +17,43 @@ class HomeScreen extends StatelessWidget {
     double _width = MediaQuery.of(context).size.width;
 //    double _height = MediaQuery.of(context).size.width;
     final ProductController productCtrl = Get.put(ProductController());
+    final CartController cartController = Get.put(CartController());
     return Obx(() => DefaultTabController(
         length: productCtrl.categoryList.length,
         initialIndex: productCtrl.tabIndex.value,
         child: Scaffold(
           appBar: AppBar(
             title: const Text(appName),
+            actions: [
+              Container(
+                child: Stack(
+                  children: [
+                    const Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 46,
+                    ),
+                    cartController.cartListFromLocal.isEmpty
+                        ? Container()
+                        : Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: CircleAvatar(
+                              radius: 12,
+                              child: Text(
+                                cartController.cartListFromLocal.length > 9
+                                    ? "9+"
+                                    : cartController.cartListFromLocal.length
+                                        .toString(),
+                                style: const TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )
+                  ],
+                ),
+              )
+            ],
             bottom: PreferredSize(
               child: SizedBox(
                 child: productCtrl.categoryList.isNotEmpty
