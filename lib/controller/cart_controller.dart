@@ -26,6 +26,7 @@ class CartController extends GetxController {
     _cartModel.image = productModel.image;
 
     _dbHelper.insert(_cartModel);
+    fetchCartList();
   }
 
   fetchCartList() {
