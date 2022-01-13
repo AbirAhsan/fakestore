@@ -1,10 +1,4 @@
 class ProductModel {
-  static const tblproducts = 'products';
-  static const colId = 'id';
-  static const colTitle = 'title';
-  static const colPrice = 'price';
-  static const colCategory = 'category';
-  static const colImage = 'image';
   ProductModel({
     required this.id,
     required this.title,

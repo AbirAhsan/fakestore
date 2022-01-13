@@ -1,4 +1,4 @@
-import 'package:fakestore/model/product_model.dart';
+import 'package:fakestore/model/cart_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -25,19 +25,20 @@ class CartDatabaseHelper {
 
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-  CREATE TABLE ${ProductModel.tblproducts} (
-    ${ProductModel.colId} INTEGER,
-    ${ProductModel.colTitle} TEXT,
-    ${ProductModel.colPrice} TEXT,
-    ${ProductModel.colCategory} TEXT,
-    ${ProductModel.colImage} TEXT
+  CREATE TABLE ${CartModel.tblcarts} (
+    ${CartModel.colId} INTEGER PRIMARY KEY AUTOINCREMENT,
+    ${CartModel.colProductId} INTEGER ,
+    ${CartModel.colTitle} TEXT,
+    ${CartModel.colPrice} TEXT,
+    ${CartModel.colCount} INTEGER,
+    ${CartModel.colImage} TEXT
     )
   ''');
   }
 
-  Future<int> insert(ProductModel? productModel) async {
+  Future<int> insert(CartModel? cartModel) async {
     Database db = await database;
-    var res = await db.insert(ProductModel.tblproducts, productModel!.toMap());
+    var res = await db.insert(CartModel.tblcarts, cartModel!.toMap());
     return res;
   }
 
@@ -77,16 +78,14 @@ class CartDatabaseHelper {
 
 // Fetch Data Which one added to cart
 
-  Future<List<ProductModel?>> fetchCart() async {
+  Future<List<CartModel?>> fetchCart() async {
     Database db = await database;
-    List<Map<String, dynamic>> product = await db.query(
-      ProductModel.tblproducts,
+    List<Map<String, dynamic>> cart = await db.query(
+      CartModel.tblcarts,
       // where: '${Jokes.colActive}=?',
       // whereArgs: [1],
     );
-    return product.isEmpty
-        ? []
-        : product.map((x) => ProductModel.fromMap(x)).toList();
+    return cart.isEmpty ? [] : cart.map((x) => CartModel.fromMap(x)).toList();
   }
 
 // //<============== Fetch Data Which Category Match
