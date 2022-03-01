@@ -39,48 +39,53 @@ class CartDatabaseHelper {
   Future<int> insert(CartModel? cartModel) async {
     Database db = await database;
     var res = await db.insert(CartModel.tblcarts, cartModel!.toMap());
-    print(res);
+
     return res;
   }
 
-//   // Future<bool> findJokes() async{
+  Future<bool> queryCart(int productID) async {
+    Database db = await database;
+    List<Map<String, dynamic>> cart = await db.query(
+      CartModel.tblcarts,
+      where: '${CartModel.colProductId}=?',
+      whereArgs: [productID],
+    );
+    return cart.isEmpty ? false : true;
+  }
 
-//   //   return false;
-//   // }
+  Future<List<CartModel?>> fetchSingleCart(int productID) async {
+    Database db = await database;
+    List<Map<String, dynamic>> cart = await db.query(
+      CartModel.tblcarts,
+      where: '${CartModel.colProductId}=?',
+      whereArgs: [productID],
+    );
+    print(cart);
+    return cart.isEmpty ? [] : cart.map((x) => CartModel.fromMap(x)).toList();
+  }
 
-//   Future<int> setFav(int id, bool value) async {
-//     Database db = await database;
-//     return await db.update(
-//         Jokes.tblJokes,
-//         {
-//           Jokes.colFav: value ? 1 : 0,
-//         },
-//         where: '${Jokes.colID}=?',
-//         whereArgs: [id]);
-//   }
+  Future<int> increaseCount(int productID, count) async {
+    Database db = await database;
+    return await db.update(
+        CartModel.tblcarts,
+        {
+          CartModel.colCount: count,
+        },
+        where: '${CartModel.colProductId}=?',
+        whereArgs: [productID]);
+  }
 
-//   Future<int> delete(int id) async {
-//     Database db = await database;
-//     return await db
-//         .delete(Jokes.tblJokes, where: '${Jokes.colID} = ?', whereArgs: [id]);
-//   }
-
-// // Active and Deactive Jokes by Category
-//   Future<int> setActiveDeactive(int id, bool value) async {
-//     Database db = await database;
-//     return await db.update(
-//         Jokes.tblJokes,
-//         {
-//           Jokes.colActive: value ? 1 : 0,
-//         },
-//         where: '${Jokes.colCatID}=?',
-//         whereArgs: [id]);
-//   }
+  // Future<int> delete(int id) async {
+  //   Database db = await database;
+  //   return await db
+  //       .delete(Jokes.tblJokes, where: '${Jokes.colID} = ?', whereArgs: [id]);
+  // }
 
 // Fetch Data Which one added to cart
 
   Future<List<CartModel?>> fetchCart() async {
     Database db = await database;
+
     List<Map<String, dynamic>> cart = await db.query(
       CartModel.tblcarts,
       // where: '${Jokes.colActive}=?',
